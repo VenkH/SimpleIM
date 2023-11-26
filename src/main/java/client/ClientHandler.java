@@ -3,7 +3,7 @@ package client;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import packet.LoginRequestPacket;
+import packet.req.LoginRequestPacket;
 import packet.PacketCodeC;
 
 import java.nio.charset.StandardCharsets;

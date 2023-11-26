@@ -2,6 +2,7 @@ package packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import packet.req.LoginRequestPacket;
 import serialize.Serializer;
 import serialize.impl.JSONSerializer;
 

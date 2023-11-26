@@ -3,11 +3,10 @@ package server;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import packet.LoginRequestPacket;
+import packet.req.LoginRequestPacket;
 import packet.Packet;
 import packet.PacketCodeC;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 

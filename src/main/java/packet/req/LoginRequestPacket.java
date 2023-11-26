@@ -1,7 +1,8 @@
-package packet;
+package packet.req;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import packet.Packet;
 
 import static packet.Command.LOGIN_REQUEST;
 

@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import packet.req.LoginRequestPacket;
 import packet.Packet;
 import packet.PacketCodeC;
+import packet.resp.LoginResponsePacket;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -26,17 +27,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             System.out.println(new Date() + "：客户端建立连接");
             System.out.println(new Date() + "：【用户】 " + loginRequestPacket.getUsername() + " 登录成功");
 
-            byte[] bytes = ("你好" + loginRequestPacket.getUsername() + "欢迎登录").getBytes(StandardCharsets.UTF_8);
-            ByteBuf byteBuf1 = getByteBuf(ctx, bytes);
-            ctx.channel().writeAndFlush(byteBuf1);
+            LoginResponsePacket loginResponse = new LoginResponsePacket();
+            loginResponse.setSuccess(true);
+            loginResponse.setMessage("登录成功");
+            loginResponse.setUsername(loginResponse.getUsername());
+
+            ByteBuf buf = PacketCodeC.INSTANCE.encode(loginRequestPacket);
+            ctx.channel().writeAndFlush(buf);
         }
     }
 
-    private ByteBuf getByteBuf(ChannelHandlerContext ctx, byte[] bytes) {
-        ByteBuf buffer = ctx.alloc().buffer();
-
-        buffer.writeBytes(bytes);
-
-        return buffer;
-    }
 }

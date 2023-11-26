@@ -12,6 +12,8 @@ import static packet.Command.LOGIN_REQUEST;
 
 public class PacketCodeC {
 
+    public static final PacketCodeC INSTANCE;
+
     private static final int MAGIC_NUMBER = 0x12345678;
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
@@ -23,6 +25,8 @@ public class PacketCodeC {
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
+
+        INSTANCE = new PacketCodeC();
     }
 
     public ByteBuf encode(Packet packet) {

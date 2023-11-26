@@ -24,7 +24,7 @@ public class SimpleClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new FirstClientHandler());
+                        ch.pipeline().addLast(new ClientHandler());
                     }
                 });
         // 4.建立连接

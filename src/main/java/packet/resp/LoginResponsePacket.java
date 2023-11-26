@@ -3,7 +3,7 @@ package packet.resp;
 import lombok.Data;
 import packet.Packet;
 
-import static packet.Command.LOGIN_REQUEST;
+import static packet.Command.LOGIN_RESPONSE;
 
 @Data
 public class LoginResponsePacket extends Packet {
@@ -25,6 +25,6 @@ public class LoginResponsePacket extends Packet {
 
     @Override
     public Byte getCommand() {
-        return LOGIN_REQUEST;
+        return LOGIN_RESPONSE;
     }
 }

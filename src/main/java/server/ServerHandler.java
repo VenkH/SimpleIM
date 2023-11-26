@@ -30,9 +30,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             LoginResponsePacket loginResponse = new LoginResponsePacket();
             loginResponse.setSuccess(true);
             loginResponse.setMessage("登录成功");
-            loginResponse.setUsername(loginResponse.getUsername());
+            loginResponse.setUsername(loginRequestPacket.getUsername());
 
-            ByteBuf buf = PacketCodeC.INSTANCE.encode(loginRequestPacket);
+            ByteBuf buf = PacketCodeC.INSTANCE.encode(loginResponse);
             ctx.channel().writeAndFlush(buf);
         }
     }

@@ -3,6 +3,7 @@ package packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import packet.req.LoginRequestPacket;
+import packet.resp.LoginResponsePacket;
 import serialize.Serializer;
 import serialize.impl.JSONSerializer;
 
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static packet.Command.LOGIN_REQUEST;
+import static packet.Command.LOGIN_RESPONSE;
 
 public class PacketCodeC {
 
@@ -22,6 +24,7 @@ public class PacketCodeC {
     static {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

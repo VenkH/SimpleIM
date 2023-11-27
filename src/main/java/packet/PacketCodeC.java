@@ -3,15 +3,16 @@ package packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import packet.req.LoginRequestPacket;
+import packet.req.MessageRequestPacket;
 import packet.resp.LoginResponsePacket;
+import packet.resp.MessageResponsePacket;
 import serialize.Serializer;
 import serialize.impl.JSONSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static packet.Command.LOGIN_REQUEST;
-import static packet.Command.LOGIN_RESPONSE;
+import static packet.Command.*;
 
 public class PacketCodeC {
 
@@ -25,6 +26,8 @@ public class PacketCodeC {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
         PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();
@@ -48,6 +51,21 @@ public class PacketCodeC {
         byteBuf.writeBytes(bytes);
 
         return byteBuf;
+    }
+
+    public void encode(Packet packet, ByteBuf byteBuf) {
+
+        // 1. 序列化 Java 对象
+        byte[] bytes = Serializer.DEFAULT.serialize(packet);
+
+        // 2. 实际编码过程
+        byteBuf.writeInt(MAGIC_NUMBER);
+        byteBuf.writeByte(packet.getVersion());
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
+        byteBuf.writeByte(packet.getCommand());
+        byteBuf.writeInt(bytes.length);
+        byteBuf.writeBytes(bytes);
+
     }
 
     public Packet decode(ByteBuf byteBuf) {

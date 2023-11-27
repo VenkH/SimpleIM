@@ -1,4 +1,4 @@
-package server;
+package server.handler01;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,7 +23,7 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     private ByteBuf getByteBuf(ChannelHandlerContext ctx) {
-        byte[] bytes = "你好，欢迎关注我的微信公众号，《闪电侠的博客》!".getBytes(Charset.forName("utf-8"));
+        byte[] bytes = "Hello，服务端，来自客户端的一条消息".getBytes(StandardCharsets.UTF_8);
 
         ByteBuf buffer = ctx.alloc().buffer();
 

@@ -9,9 +9,9 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import server.handler03.AuthHandler;
 import server.handler03.LoginServerHandler;
 import server.handler03.MessageServerHandler;
 
@@ -35,6 +35,7 @@ public class SimpleServer {
                                 .addLast(new Spliter())
                                 .addLast(new PacketDecoder())
                                 .addLast(new LoginServerHandler())
+                                .addLast(new AuthHandler())
                                 .addLast(new MessageServerHandler())
                                 .addLast(new PacketEncoder());
                     }

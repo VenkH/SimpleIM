@@ -1,12 +1,10 @@
 package server.handler03;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
-import packet.PacketCodeC;
 import packet.req.LoginRequestPacket;
 import packet.resp.LoginResponsePacket;
+import util.LoginUtil;
 
 import java.util.Date;
 
@@ -28,6 +26,7 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<LoginRequest
         loginResponse.setMessage("登录成功");
         loginResponse.setUsername(loginRequestPacket.getUsername());
 
+        LoginUtil.markAsLogin(channelHandlerContext.channel());
         // PacketEncoder 会自动编码
         channelHandlerContext.channel().writeAndFlush(loginResponse);
     }

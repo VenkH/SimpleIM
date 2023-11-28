@@ -5,6 +5,7 @@ import client.handler03.LoginResponseHandler;
 import client.handler03.MessageResponseHandler;
 import codec.PacketDecoder;
 import codec.PacketEncoder;
+import codec.Spliter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -12,6 +13,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import packet.req.MessageRequestPacket;
 import util.LoginUtil;
 
@@ -35,6 +37,7 @@ public class SimpleClient {
                     @Override
                     public void initChannel(SocketChannel ch) {
                         ch.pipeline()
+                                .addLast(new Spliter())
                                 .addLast(new PacketDecoder())
                                 .addLast(new LoginResponseHandler())
                                 .addLast(new MessageResponseHandler())

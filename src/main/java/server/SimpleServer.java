@@ -2,12 +2,14 @@ package server;
 
 import codec.PacketDecoder;
 import codec.PacketEncoder;
+import codec.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import server.handler03.LoginServerHandler;
@@ -30,6 +32,7 @@ public class SimpleServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) {
                         ch.pipeline()
+                                .addLast(new Spliter())
                                 .addLast(new PacketDecoder())
                                 .addLast(new LoginServerHandler())
                                 .addLast(new MessageServerHandler())

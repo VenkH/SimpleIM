@@ -2,8 +2,10 @@ package packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import packet.req.CreateGroupRequestPacket;
 import packet.req.LoginRequestPacket;
 import packet.req.MessageRequestPacket;
+import packet.resp.CreateGroupResponsePacket;
 import packet.resp.LoginResponsePacket;
 import packet.resp.MessageResponsePacket;
 import serialize.Serializer;
@@ -28,6 +30,8 @@ public class PacketCodeC {
         PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

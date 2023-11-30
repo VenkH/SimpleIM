@@ -12,6 +12,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import server.handler.AuthHandler;
+import server.handler.CreateGroupRequestHandler;
 import server.handler.LoginServerHandler;
 import server.handler.MessageServerHandler;
 
@@ -36,6 +37,7 @@ public class SimpleServer {
                                 .addLast(new PacketDecoder())
                                 .addLast(new LoginServerHandler())
                                 .addLast(new AuthHandler())
+                                .addLast(new CreateGroupRequestHandler())
                                 .addLast(new MessageServerHandler())
                                 .addLast(new PacketEncoder());
                     }

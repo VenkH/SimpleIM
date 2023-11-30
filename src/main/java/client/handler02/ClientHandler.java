@@ -8,8 +8,8 @@ import packet.req.LoginRequestPacket;
 import packet.PacketCodeC;
 import packet.resp.LoginResponsePacket;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.UUID;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
@@ -19,7 +19,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         LoginRequestPacket loginRequest = new LoginRequestPacket();
-        loginRequest.setUserId((int) System.currentTimeMillis());
+        loginRequest.setUserId(randomUserId());
         loginRequest.setUsername("vent");
         loginRequest.setPassword("pwd");
 
@@ -27,6 +27,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         System.out.println(new Date() + "：客户端登录");
         ctx.channel().writeAndFlush(encode);
+    }
+
+    private static String randomUserId() {
+        return UUID.randomUUID().toString().split("-")[0];
     }
 
     @Override

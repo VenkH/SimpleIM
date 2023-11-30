@@ -7,6 +7,7 @@ import packet.resp.LoginResponsePacket;
 import util.LoginUtil;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
 
@@ -14,12 +15,16 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     public void channelActive(ChannelHandlerContext ctx) {
         // 创建登录对象
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-        loginRequestPacket.setUserId((int) System.currentTimeMillis());
+        loginRequestPacket.setUserId(randomUserId());
         loginRequestPacket.setUsername("flash");
         loginRequestPacket.setPassword("pwd");
 
         // 写数据
         ctx.channel().writeAndFlush(loginRequestPacket);
+    }
+
+    private static String randomUserId() {
+        return UUID.randomUUID().toString().split("-")[0];
     }
 
     @Override

@@ -4,7 +4,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import packet.req.LoginRequestPacket;
 import packet.resp.LoginResponsePacket;
-import util.LoginUtil;
+import session.Session;
+
+import util.SessionUtil;
 
 import java.util.Date;
 
@@ -26,7 +28,8 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<LoginRequest
         loginResponse.setMessage("登录成功");
         loginResponse.setUsername(loginRequestPacket.getUsername());
 
-        LoginUtil.markAsLogin(channelHandlerContext.channel());
+        Session session = new Session(loginRequestPacket.getUserId(), loginRequestPacket.getUsername());
+        SessionUtil.bindSession(session, channelHandlerContext.channel());
         // PacketEncoder 会自动编码
         channelHandlerContext.channel().writeAndFlush(loginResponse);
     }

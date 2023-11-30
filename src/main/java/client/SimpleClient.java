@@ -1,8 +1,7 @@
 package client;
 
-import client.handler02.ClientHandler;
-import client.handler03.LoginResponseHandler;
-import client.handler03.MessageResponseHandler;
+import client.handler.LoginResponseHandler;
+import client.handler.MessageResponseHandler;
 import codec.PacketDecoder;
 import codec.PacketEncoder;
 import codec.Spliter;
@@ -13,12 +12,13 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import packet.req.LoginRequestPacket;
 import packet.req.MessageRequestPacket;
-import util.LoginUtil;
+import util.SessionUtil;
 
 import java.util.Date;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class SimpleClient {
@@ -105,22 +105,49 @@ public class SimpleClient {
     }
 
     /**
-     * 建立连接后，新建一个线程读取键盘输入
-     * 给服务端发消息
+     * 建立连接后，先进行登录
+     * 登录完成后可以给指定用户发消息
+     *
      * @param channel channel
      */
     private static void startConsoleThread(Channel channel) {
+        Scanner sc = new Scanner(System.in);
+        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                if (LoginUtil.hasLogin(channel)) {
-                    System.out.println("输入消息发送至服务端: ");
-                    Scanner sc = new Scanner(System.in);
-                    String line = sc.nextLine();
+                if (!SessionUtil.hasLogin(channel)) {
+                    // 随机生成用户id
+                    loginRequestPacket.setUserId(randomUserId());
+                    System.out.print("输入用户名登录: ");
+                    String username = sc.nextLine();
+                    loginRequestPacket.setUsername(username);
 
-                    channel.writeAndFlush(new MessageRequestPacket(line));
+                    // 密码使用默认的
+                    loginRequestPacket.setPassword("pwd");
+
+                    // 发送登录数据包
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLoginResponse();
+                } else {
+                    String toUserId = sc.next();
+                    String message = sc.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
                 }
             }
         }).start();
+    }
+
+
+    private static void waitForLoginResponse() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    private static String randomUserId() {
+        return UUID.randomUUID().toString().split("-")[0];
     }
 
 

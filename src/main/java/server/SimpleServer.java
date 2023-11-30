@@ -11,9 +11,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import server.handler03.AuthHandler;
-import server.handler03.LoginServerHandler;
-import server.handler03.MessageServerHandler;
+import server.handler.AuthHandler;
+import server.handler.LoginServerHandler;
+import server.handler.MessageServerHandler;
 
 public class SimpleServer {
     public static void main(String[] args) {

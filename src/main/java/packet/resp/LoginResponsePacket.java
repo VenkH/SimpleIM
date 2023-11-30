@@ -7,6 +7,10 @@ import static packet.Command.LOGIN_RESPONSE;
 
 @Data
 public class LoginResponsePacket extends Packet {
+    /**
+     * 用户唯一标识
+     */
+    private String userId;
 
     /**
      * 登录成功标识

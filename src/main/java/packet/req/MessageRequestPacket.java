@@ -13,7 +13,7 @@ import static packet.Command.MESSAGE_REQUEST;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageRequestPacket extends Packet {
-
+    private String toUserId;
     private String message;
 
     @Override

@@ -1,4 +1,4 @@
-package server.handler03;
+package server.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -25,6 +25,7 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<LoginRequest
 
         LoginResponsePacket loginResponse = new LoginResponsePacket();
         loginResponse.setSuccess(true);
+        loginResponse.setUserId(loginRequestPacket.getUserId());
         loginResponse.setMessage("登录成功");
         loginResponse.setUsername(loginRequestPacket.getUsername());
 
